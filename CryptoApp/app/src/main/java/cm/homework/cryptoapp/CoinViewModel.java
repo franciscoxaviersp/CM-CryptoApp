@@ -1,4 +1,4 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp;
 
 import android.app.Application;
 
@@ -6,6 +6,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+
+import cm.homework.cryptoapp.db.CoinRepository;
+import cm.homework.cryptoapp.models.Coin;
 
 public class CoinViewModel extends AndroidViewModel {
 
@@ -19,7 +22,7 @@ public class CoinViewModel extends AndroidViewModel {
         mAllCoins = mRepository.getAllCoins();
     }
 
-    LiveData<List<Coin>> getAllCoins() { return mAllCoins; }
+    public LiveData<List<Coin>> getAllCoins() { return mAllCoins; }
 
     public void insert(Coin coin) { mRepository.insert(coin); }
 }

@@ -1,10 +1,16 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+
+import cm.homework.cryptoapp.activities.CoinActivity;
+import cm.homework.cryptoapp.models.Coin;
 
 public class CoinListAdapter extends ListAdapter<Coin, CoinViewHolder> {
 
@@ -18,11 +24,21 @@ public class CoinListAdapter extends ListAdapter<Coin, CoinViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(CoinViewHolder holder, int position) {
+    public void onBindViewHolder(CoinViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bind(getItem(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+
+                Intent intent = new Intent(v.getContext(), CoinActivity.class);
+                intent.putExtra("symbol",getItem(position).getSymbol());
+                //launch activity with info to be changed
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
-    static class CoinDiff extends DiffUtil.ItemCallback<Coin> {
+    public static class CoinDiff extends DiffUtil.ItemCallback<Coin> {
 
         @Override
         public boolean areItemsTheSame(@NonNull Coin oldItem, @NonNull Coin newItem) {

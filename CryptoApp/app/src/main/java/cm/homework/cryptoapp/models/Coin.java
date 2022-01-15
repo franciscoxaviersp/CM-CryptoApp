@@ -1,11 +1,10 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 
 /**
@@ -32,6 +31,7 @@ public class Coin implements Comparable{
     private double openPrice;
     private double highPrice;
     private double lowPrice;
+    @ColumnInfo(name = "volume")
     private double volume;
     private double quoteVolume;
     private Long openTime;

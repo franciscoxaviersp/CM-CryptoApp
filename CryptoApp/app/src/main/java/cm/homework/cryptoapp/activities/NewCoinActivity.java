@@ -1,4 +1,4 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+
+import cm.homework.cryptoapp.R;
 
 public class NewCoinActivity extends AppCompatActivity {
 

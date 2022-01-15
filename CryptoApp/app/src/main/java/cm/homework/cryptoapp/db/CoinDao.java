@@ -1,4 +1,4 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
+
+import cm.homework.cryptoapp.models.Coin;
 
 @Dao
 public interface CoinDao {
@@ -19,6 +21,6 @@ public interface CoinDao {
     @Query("DELETE FROM coin_table")
     void deleteAll();
 
-    @Query("SELECT * FROM coin_table ORDER BY symbol ASC")
-    LiveData<List<Coin>> getAscCoins();
+    @Query("SELECT * FROM coin_table ORDER BY volume ASC")
+    LiveData<List<Coin>> getVolAscCoins();
 }

@@ -1,13 +1,10 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp.db;
 
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -24,7 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import cm.homework.cryptoapp.models.Coin;
 
 public class UpdateDBWorker extends Worker {
 
@@ -42,7 +40,6 @@ public class UpdateDBWorker extends Worker {
         try{
             Log.i("work","Doing work");
             getCoins();
-            newWorkRequest();
             setProgressAsync(new Data.Builder().putInt(PROGRESS, 100).build());
             return Result.success();
         }catch (Exception e){
@@ -50,11 +47,6 @@ public class UpdateDBWorker extends Worker {
             Log.e("e","Failed to update db");
             return Result.failure();
         }
-    }
-
-    private void newWorkRequest(){
-        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(UpdateDBWorker.class).setInitialDelay(1, TimeUnit.MINUTES).addTag("UpdateDBWorker").build();
-        WorkManager.getInstance(getApplicationContext()).enqueue(oneTimeWorkRequest);
     }
 
     void getCoins(){

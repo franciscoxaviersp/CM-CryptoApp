@@ -1,4 +1,4 @@
-package cm.homework.roomwordsample;
+package cm.homework.cryptoapp.db;
 
 import android.content.Context;
 
@@ -10,6 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import cm.homework.cryptoapp.models.Coin;
 
 @Database(entities = {Coin.class}, version = 1, exportSchema = false)
 public abstract class CoinRoomDatabase extends RoomDatabase {
@@ -40,7 +42,7 @@ public abstract class CoinRoomDatabase extends RoomDatabase {
 
 
 
-    static CoinRoomDatabase getDatabase(final Context context) {
+    public static CoinRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (CoinRoomDatabase.class) {
                 if (INSTANCE == null) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cm.homework.roomwordsample">
+    package="cm.homework.cryptoapp">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
@@ -11,11 +11,17 @@
         android:theme="@style/Theme.RoomWordSample">
 
         <activity
-            android:name=".NewCoinActivity"
-            android:exported="false" />
+            android:name="cm.homework.cryptoapp.activities.NewCoinActivity"
+            android:exported="false"
+            android:label="Create new coin"/>
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name="cm.homework.cryptoapp.activities.CoinActivity"
+            android:exported="false"
+            android:label="Coin information"/>
+        <activity
+            android:name="cm.homework.cryptoapp.activities.MainActivity"
+            android:exported="true"
+            android:label="Crypto ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

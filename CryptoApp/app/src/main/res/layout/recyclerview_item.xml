@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -14,22 +15,28 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:background="@android:color/holo_orange_light"
-            android:text="ofaowfq"/>
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/priceView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:text="gnro"/>
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/percentView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="apjfas"/>
+            android:gravity="center"
+            android:background="@drawable/percent_box"
+            android:textStyle="bold"
+            android:textSize="17dp"/>
 
     </RelativeLayout>
 </LinearLayout>
