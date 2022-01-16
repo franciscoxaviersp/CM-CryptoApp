@@ -1,3 +1,4 @@
+
 plugins {
     id 'com.android.application'
 }
@@ -6,7 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "cm.homework.roomwordsample"
+        applicationId "cm.homework.cryptoapp"
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -29,7 +30,8 @@ android {
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
@@ -61,3 +63,4 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
 
 }
+apply plugin: 'com.google.gms.google-services'

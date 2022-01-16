@@ -15,11 +15,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Arrays;
+import java.util.List;
 
 import cm.homework.cryptoapp.db.CoinDao;
 import cm.homework.cryptoapp.db.CoinRoomDatabase;
@@ -33,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
     private CoinViewModel mCoinViewModel;
     private Handler APICallHandler;
+
+    ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
+                @Override
+                public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
+                    onSignInResult(result);
+                }
+            });
+
 
     ActivityResultLauncher<Intent> launchActivity = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -53,9 +74,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse response = result.getIdpResponse();
+        if (result.getResultCode() == RESULT_OK) {
+            // Successfully signed in
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.d("LOGIN", "SUCESS");
+
+        } else {
+            Log.d("LOGIN", "FAILED");
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
 
         APICallHandler = new Handler();
         setContentView(R.layout.activity_main);
