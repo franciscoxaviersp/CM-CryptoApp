@@ -3,6 +3,7 @@ package cm.homework.cryptoapp.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
@@ -42,7 +43,7 @@ public class Coin implements Comparable{
 
     public Coin() {
     }
-
+    @Ignore
     public Coin(String symbol) {
         this.symbol = symbol;
     }

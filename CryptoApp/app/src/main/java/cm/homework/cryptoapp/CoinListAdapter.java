@@ -32,6 +32,11 @@ public class CoinListAdapter extends ListAdapter<Coin, CoinViewHolder> {
 
                 Intent intent = new Intent(v.getContext(), CoinActivity.class);
                 intent.putExtra("symbol",getItem(position).getSymbol());
+                intent.putExtra("askPrice",getItem(position).getAskPrice());
+                intent.putExtra("priceChange",getItem(position).getPriceChange());
+                intent.putExtra("priceChangePercent",getItem(position).getPriceChangePercent());
+                intent.putExtra("volume",getItem(position).getVolume());
+
                 //launch activity with info to be changed
                 v.getContext().startActivity(intent);
             }

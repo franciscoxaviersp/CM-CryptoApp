@@ -1,4 +1,4 @@
-package cm.homework.cryptoapp.db;
+package cm.homework.cryptoapp.workers;
 
 import android.content.Context;
 import android.util.Log;
@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import cm.homework.cryptoapp.db.CoinDao;
+import cm.homework.cryptoapp.db.CoinRoomDatabase;
 import cm.homework.cryptoapp.models.Coin;
 
 public class UpdateDBWorker extends Worker {

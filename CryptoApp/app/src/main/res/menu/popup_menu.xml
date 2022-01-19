@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/one_minute"
+        android:title="1 minute" />
+    <item android:id="@+id/three_minute"
+        android:title="3 minute"/>
+    <item android:id="@+id/five_minute"
+        android:title="5 minutes"/>
+    <item android:id="@+id/fifteen_minute"
+        android:title="15 minutes"/>
+    <item android:id="@+id/thirty_minutes"
+        android:title="30 minutes"/>
+    <item android:id="@+id/one_hour"
+        android:title="1 hour"/>
+    <item android:id="@+id/two_hour"
+        android:title="2 hours"/>
+    <item android:id="@+id/four_hour"
+        android:title="4 hours"/>
+    <item android:id="@+id/six_hour"
+        android:title="6 hours"/>
+    <item android:id="@+id/eight_hour"
+        android:title="8 hours"/>
+    <item android:id="@+id/twelve_hour"
+        android:title="12 hours"/>
+    <item android:id="@+id/one_day"
+        android:title="1 day"/>
+    <item android:id="@+id/three_day"
+        android:title="3 days"/>
+    <item android:id="@+id/one_week"
+        android:title="1 week"/>
+
+</menu>

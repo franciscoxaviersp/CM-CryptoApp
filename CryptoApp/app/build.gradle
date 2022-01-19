@@ -30,13 +30,25 @@ android {
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    
+    //firebase
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+
+    //jackson - parse json to objects
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
 
+    //work manager
     implementation "androidx.work:work-runtime:2.3.1"
+
+    //candle chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     // Dependencies for working with Architecture components
     // You'll probably have to update the version numbers in build.gradle (Project)
 

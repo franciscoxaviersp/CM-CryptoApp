@@ -24,7 +24,6 @@ import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,13 +31,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
-import cm.homework.cryptoapp.db.CoinDao;
-import cm.homework.cryptoapp.db.CoinRoomDatabase;
 import cm.homework.cryptoapp.models.Coin;
 import cm.homework.cryptoapp.CoinListAdapter;
 import cm.homework.cryptoapp.CoinViewModel;
 import cm.homework.cryptoapp.R;
-import cm.homework.cryptoapp.db.UpdateDBWorker;
+import cm.homework.cryptoapp.workers.UpdateDBWorker;
 
 public class MainActivity extends AppCompatActivity {
 
