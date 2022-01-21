@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CoinViewModel mCoinViewModel;
     private Handler APICallHandler;
+    private APICallRunnable runnable;
 
     ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
@@ -48,26 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
                     onSignInResult(result);
-                }
-            });
-
-
-    ActivityResultLauncher<Intent> launchActivity = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        //get result
-                        Intent data = result.getData();
-                        Coin coin = new Coin(data.getStringExtra(NewCoinActivity.EXTRA_REPLY));
-                        mCoinViewModel.insert(coin);
-                    }else{
-                        Toast.makeText(
-                                getApplicationContext(),
-                                R.string.empty_not_saved,
-                                Toast.LENGTH_LONG).show();
-                    }
                 }
             });
 
@@ -111,19 +92,19 @@ public class MainActivity extends AppCompatActivity {
             adapter.submitList(coins);
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener( view -> {
-            Intent intent = new Intent(MainActivity.this, NewCoinActivity.class);
-            //launch activity with info to be changed
-            launchActivity.launch(intent);
-        });
-
-
     }
     @Override
     public void onStart(){
         super.onStart();
-        APICallHandler.postDelayed(new APICallRunnable(),10);
+        runnable = new APICallRunnable();
+        APICallHandler.postDelayed(runnable,10);
+    }
+
+    @Override
+    public void onDestroy(){
+        Log.d("Main Activity","Stopped API call runnable.");
+        APICallHandler.removeCallbacksAndMessages(runnable);
+        super.onDestroy();
     }
 
     private class APICallRunnable implements Runnable{

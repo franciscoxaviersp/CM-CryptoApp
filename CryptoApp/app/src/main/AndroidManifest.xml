@@ -11,10 +11,6 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="cm.homework.cryptoapp.activities.NewCoinActivity"
-            android:exported="false"
-            android:label="Create new coin"/>
-        <activity
             android:name="cm.homework.cryptoapp.activities.CoinActivity"
             android:exported="false"
             android:label="Coin information"/>
