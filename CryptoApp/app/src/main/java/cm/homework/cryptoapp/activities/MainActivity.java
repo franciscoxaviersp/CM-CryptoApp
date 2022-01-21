@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CoinViewModel mCoinViewModel;
     private Handler APICallHandler;
+    private APICallRunnable runnable;
 
 
 
@@ -98,7 +99,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        APICallHandler.postDelayed(new APICallRunnable(),10);
+        runnable = new APICallRunnable();
+        APICallHandler.postDelayed(runnable,10);
+    }
+
+    @Override
+    public void onDestroy(){
+        Log.d("Main Activity","Stopped API call runnable.");
+        APICallHandler.removeCallbacksAndMessages(runnable);
+        super.onDestroy();
     }
 
     private class APICallRunnable implements Runnable{

@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +53,11 @@ public class CoinActivity extends AppCompatActivity {
     private TextView volumeEurView;
     private TextView volumeTitleView;
     private Button period_button;
+    private String symbol;
+    private double askPrice;
+    private double priceChange;
+    private double priceChangePercent;
+    private double volume;
 
     List<Candle> candles;
     @Override
@@ -65,11 +69,11 @@ public class CoinActivity extends AppCompatActivity {
         period_button.setText("1 hour");
 
         Bundle b = getIntent().getExtras();
-        String symbol = b.getString("symbol");
-        double askPrice = b.getDouble("askPrice");
-        double priceChange = b.getDouble("priceChange");
-        double priceChangePercent = b.getDouble("priceChangePercent");
-        double volume = b.getDouble("volume");
+        symbol = b.getString("symbol");
+        askPrice = b.getDouble("askPrice");
+        priceChange = b.getDouble("priceChange");
+        priceChangePercent = b.getDouble("priceChangePercent");
+        volume = b.getDouble("volume");
 
         String volumeEur = formatValue(askPrice*volume);
 
@@ -166,7 +170,6 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     public static String formatValue(double value) {
-        Log.d("Ads",Double.toString(value));
         int power;
         String suffix = " kmbt";
         String formattedNumber = "";
@@ -213,14 +216,12 @@ public class CoinActivity extends AppCompatActivity {
         candleDao.deleteAll();
 
         mRepository.getAllCandles().observe(this, c -> {
-            Log.d("Candle Worker","Updated");
             // Update the cached copy of the candles
             saveCandles(c);
             if (candles.size() == 100){
                 ArrayList<CandleEntry> candleEntries = new ArrayList<CandleEntry>();
 
                 for(Candle ca : candles){
-                    Log.d("Candle worker", ca.toString());
                     CandleEntry entry = new CandleEntry(ca.getId(),ca.getHigh(),ca.getLow(),ca.getOpen(),ca.getClose());
                     candleEntries.add(entry);
                 }
@@ -257,14 +258,11 @@ public class CoinActivity extends AppCompatActivity {
                 .observe(this, new Observer<WorkInfo>() {
                     @Override
                     public void onChanged(@Nullable WorkInfo workInfo) {
-                        Log.d("Candle worker", "WorkInfo received: state: " + workInfo.getState());
                         if(workInfo != null && workInfo.getState().equals("SUCCEEDED")) {
-                            Log.d("Candle worker", "WorkInfo received: state: " + workInfo.getState());
 
                             ArrayList<CandleEntry> candleEntries = new ArrayList<CandleEntry>();
 
                             for(Candle c : candles){
-                                Log.d("Candle worker", c.toString());
                                 CandleEntry entry = new CandleEntry(c.getId(),c.getHigh(),c.getLow(),c.getOpen(),c.getClose());
                                 candleEntries.add(entry);
                             }
