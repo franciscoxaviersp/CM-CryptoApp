@@ -26,6 +26,9 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -54,6 +57,10 @@ dependencies {
 
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 

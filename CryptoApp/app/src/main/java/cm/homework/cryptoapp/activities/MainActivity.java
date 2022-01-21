@@ -42,14 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private CoinViewModel mCoinViewModel;
     private Handler APICallHandler;
 
-    ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new FirebaseAuthUIActivityResultContract(),
-            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
-                @Override
-                public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
-                    onSignInResult(result);
-                }
-            });
+
 
 
     ActivityResultLauncher<Intent> launchActivity = registerForActivityResult(
@@ -71,29 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse response = result.getIdpResponse();
-        if (result.getResultCode() == RESULT_OK) {
-            // Successfully signed in
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.d("LOGIN", "SUCESS");
 
-        } else {
-            Log.d("LOGIN", "FAILED");
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(this);
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.GoogleBuilder().build());
 
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build();
-        signInLauncher.launch(signInIntent);
 
         APICallHandler = new Handler();
         setContentView(R.layout.activity_main);

@@ -35,4 +35,5 @@ public class NewCoinActivity extends AppCompatActivity {
             finish();
         });
     }
+
 }
