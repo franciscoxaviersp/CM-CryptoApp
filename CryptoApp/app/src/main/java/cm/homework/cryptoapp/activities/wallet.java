@@ -1,12 +1,11 @@
 package cm.homework.cryptoapp.activities;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,11 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +35,8 @@ import cm.homework.cryptoapp.R;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import cm.homework.cryptoapp.TopUpDialog;
+import cm.homework.cryptoapp.QRScanning;
+import cm.homework.cryptoapp.TransferActivity;
 
 public class wallet extends AppCompatActivity {
 
@@ -51,11 +49,9 @@ public class wallet extends AppCompatActivity {
     FirebaseFirestore db;
     Spinner spinner;
 
-
-    @SuppressLint("SetTextI18n")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onStart() {
+        super.onStart();
         setContentView(R.layout.activity_wallet);
         getSupportActionBar().setTitle("Crypto Wallet");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.LogoBlue)));
@@ -81,6 +77,14 @@ public class wallet extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         money = findViewById(R.id.money);
+        Button trs = (Button) findViewById(R.id.transferbtn1);
+        trs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Ahah", "ahah");
+                transferact();
+            }
+        });
 
         get_money();
 
@@ -90,13 +94,13 @@ public class wallet extends AppCompatActivity {
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TopUpDialog tp = new TopUpDialog(wallet.this, Double.parseDouble(currencies.get("EUR").toString()));
+                TopUpDialog tp = new TopUpDialog(wallet.this);
                 tp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 tp.show();
                 tp.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        update_money();
+                       get_money();
                     }
                 });
 
@@ -105,10 +109,16 @@ public class wallet extends AppCompatActivity {
 
 
 
-
     }
 
+    public void transferact(){
+        Intent intent = new Intent(this, TransferActivity.class);
+        startActivity(intent);
+    }
+
+
     private void get_money(){
+        adapter.clear();
         db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

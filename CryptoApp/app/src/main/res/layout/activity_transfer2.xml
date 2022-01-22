@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TransferActivity">
+
+    <EditText
+        android:id="@+id/wallet_address"
+        android:layout_width="296dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Wallet Address"
+        app:layout_constraintEnd_toStartOf="@+id/buttoncamera"
+        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttoncamera"
+        android:layout_width="58dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="28dp"
+        app:icon="@android:drawable/ic_menu_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="144dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wallet_address" />
+
+    <EditText
+        android:id="@+id/value"
+        android:layout_width="107dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wallet_address" />
+
+    <Button
+        android:id="@+id/transferok"
+        android:layout_width="116dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="88dp"
+        android:text="Transfer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="115dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="92dp"
+        android:text="Go Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
