@@ -4,4 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.wallet"/>
+    tools:context=".activities.wallet">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/walletid"
+        android:layout_width="342dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <ImageView
+        android:id="@+id/qrcode"
+        android:layout_width="286dp"
+        android:layout_height="297dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/walletid"
+        app:srcCompat="@drawable/cryptoapp_logos_white" />
+
+    <TextView
+        android:id="@+id/funds"
+        android:layout_width="218dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrcode" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="126dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/funds" />
+
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="81dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="164dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrcode" />
+
+    <Button
+        android:id="@+id/topupbtn"
+        android:layout_width="128dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="36dp"
+        android:text="Top UP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="128dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="60dp"
+        android:text="Transfer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/money" />
+</androidx.constraintlayout.widget.ConstraintLayout>
