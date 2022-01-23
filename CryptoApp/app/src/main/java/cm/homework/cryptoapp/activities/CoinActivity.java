@@ -15,7 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -31,14 +33,22 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import cm.homework.cryptoapp.BuyDialog;
 import cm.homework.cryptoapp.R;
+import cm.homework.cryptoapp.SellDialog;
 import cm.homework.cryptoapp.TopUpDialog;
 import cm.homework.cryptoapp.db.CandleDao;
 import cm.homework.cryptoapp.db.CandleRepository;
@@ -62,13 +72,17 @@ public class CoinActivity extends AppCompatActivity {
     private double priceChange;
     private double priceChangePercent;
     private double volume;
+    FirebaseUser user;
+    FirebaseFirestore db;
+    Map<String, Object> currencies;
 
     List<Candle> candles;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin);
-
+        db = FirebaseFirestore.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         period_button = this.findViewById(R.id.period_button);
         period_button.setText("1 hour");
 
@@ -149,13 +163,58 @@ public class CoinActivity extends AppCompatActivity {
 
         Button buybutton = findViewById(R.id.buybutton);
         Button sellbutton = findViewById(R.id.sellbutton);
+        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                currencies = task.getResult().getData();
+            }
+        });
 
         buybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuyDialog bd = new BuyDialog(CoinActivity.this, askPrice, symbol);
-                bd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                bd.show();
+                if (currencies != null){
+                    if (currencies.containsKey("EUR") && Double.parseDouble(currencies.get("EUR").toString()) > 0){
+                        BuyDialog bd = new BuyDialog(CoinActivity.this, askPrice, symbol);
+                        bd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        bd.show();
+                    }else{
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "You need to have EUR to buy coins",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You need to have a wallet to buy coins",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+            }
+        });
+
+        sellbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currencies != null){
+                    if (currencies.containsKey(symbol.substring(0, symbol.length()-3))){
+                        SellDialog sd = new SellDialog(CoinActivity.this, askPrice, symbol);
+                        sd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        sd.show();
+                    }else{
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "You need to have " + symbol.substring(0, symbol.length()-3) + " to sell",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You need to have a wallet to sell coins",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
             }
         });
 

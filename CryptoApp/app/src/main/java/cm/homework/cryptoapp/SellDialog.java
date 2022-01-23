@@ -28,11 +28,14 @@ public class SellDialog extends Dialog implements View.OnClickListener {
     FirebaseFirestore db;
     FirebaseUser user;
     public TextView money_text;
+    double asking_price;
+    String symbol;
 
-    public SellDialog(Activity c) {
+    public SellDialog(Activity c, double asking_price, String symbol) {
         super(c);
         this.c = c;
-
+        this.asking_price = asking_price;
+        this.symbol = symbol;
     }
 
     @Override
@@ -45,7 +48,16 @@ public class SellDialog extends Dialog implements View.OnClickListener {
         yes = (Button) findViewById(R.id.ok_btn);
         yes.setOnClickListener(this);
         money = findViewById(R.id.topup);
-        money_text = findViewById(R.id.money);
+        money_text = findViewById(R.id.much);
+
+
+        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                Map<String, Object> currencies = task.getResult().getData();
+                money_text.setText(currencies.get(symbol.substring(0, symbol.length()-3)).toString());
+            }
+        });
 
         Button no = findViewById(R.id.cancel);
         no.setOnClickListener(new View.OnClickListener() {
@@ -60,35 +72,27 @@ public class SellDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        double gain = asking_price * Double.parseDouble(money.getText().toString());
+
         db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot result = task.getResult();
-                Log.d("Result", result.toString());
-                if (result.getData() != null) {
-                    if (!result.getData().containsKey("EUR")) {
-                        Map<String, Object> temp = result.getData();
-                        Double a = Double.parseDouble(money.getText().toString());
-                        temp.put("EUR", a);
-                        db.collection("users").document(user.getUid()).set(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                dismiss();
-                            }
-                        });
-                    } else {
-                        Map<String, Object> temp = result.getData();
-                        Double a = Double.parseDouble(money.getText().toString());
-                        temp.put("EUR", Double.parseDouble(temp.get("EUR").toString()) + a);
-                        db.collection("users").document(user.getUid()).set(temp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                dismiss();
-                            }
-                        });
-                    }
-
+                Map<String, Object> currencies = task.getResult().getData();
+                if (Double.parseDouble(money.getText().toString()) > Double.parseDouble(currencies.get(symbol.substring(0, symbol.length()-3)).toString())){
+                    dismiss();
                 }
+                double qt = Double.parseDouble(currencies.get(symbol.substring(0, symbol.length()-3)).toString());
+                double now = qt - Double.parseDouble(money.getText().toString());
+                double now_eur = Double.parseDouble(currencies.get("EUR").toString()) + gain;
+                currencies.put(symbol.substring(0, symbol.length()-3), now);
+                currencies.put("EUR", now_eur);
+                db.collection("users").document(user.getUid()).set(currencies).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        dismiss();
+                    }
+                });
+
             }
         });
     }
