@@ -119,6 +119,7 @@
                 android:layout_weight="0.2" />
 
             <Button
+                android:id="@+id/buybutton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.2"
@@ -126,19 +127,21 @@
                 android:paddingRight="20dp"
                 android:text="BUY"
                 android:textSize="30dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2" />
+
             <Button
+                android:id="@+id/sellbutton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.2"
                 android:paddingRight="20dp"
                 android:text="SELL"
                 android:textSize="30dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -1,0 +1,39 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round">
+
+    <EditText
+        android:id="@+id/topup"
+        android:layout_width="160dp"
+        android:layout_height="78dp"
+        android:hint="Sell Coin"
+        android:inputType="text|number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="69dp"
+        android:layout_height="40dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="OK"
+        app:layout_constraintEnd_toEndOf="@+id/topup"
+        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topup" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="69dp"
+        android:layout_height="40dp"
+        android:text="Cancel"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toStartOf="@+id/ok_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="78dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

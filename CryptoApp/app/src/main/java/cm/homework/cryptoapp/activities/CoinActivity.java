@@ -1,7 +1,9 @@
 package cm.homework.cryptoapp.activities;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -35,7 +37,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cm.homework.cryptoapp.BuyDialog;
 import cm.homework.cryptoapp.R;
+import cm.homework.cryptoapp.TopUpDialog;
 import cm.homework.cryptoapp.db.CandleDao;
 import cm.homework.cryptoapp.db.CandleRepository;
 import cm.homework.cryptoapp.db.CandleRoomDatabase;
@@ -140,6 +144,18 @@ public class CoinActivity extends AppCompatActivity {
 
                     volumeEurView.setText(formatValue(c.getVolume()*c.getAskPrice()));
                 }
+            }
+        });
+
+        Button buybutton = findViewById(R.id.buybutton);
+        Button sellbutton = findViewById(R.id.sellbutton);
+
+        buybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuyDialog bd = new BuyDialog(CoinActivity.this, askPrice, symbol);
+                bd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                bd.show();
             }
         });
 
