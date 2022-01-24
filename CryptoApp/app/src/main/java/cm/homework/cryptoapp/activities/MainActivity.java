@@ -1,10 +1,10 @@
 package cm.homework.cryptoapp.activities;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,34 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
-import com.firebase.ui.auth.IdpResponse;
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.messaging.FirebaseMessaging;
-
-import java.util.Arrays;
-import java.util.List;
-
-import cm.homework.cryptoapp.models.Coin;
 import cm.homework.cryptoapp.CoinListAdapter;
-import cm.homework.cryptoapp.CoinViewModel;
 import cm.homework.cryptoapp.R;
+import cm.homework.cryptoapp.viewmodels.CoinViewModel;
 import cm.homework.cryptoapp.workers.UpdateDBWorker;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,13 +28,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.LogoBlue)));
-        getSupportActionBar().setTitle("Crypto Market");
-
-
-
-
         APICallHandler = new Handler();
+
+        runnable = new APICallRunnable();
+        APICallHandler.postDelayed(runnable,10);
+
         setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -77,19 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
-    @Override
-    public void onStart(){
-        super.onStart();
-        runnable = new APICallRunnable();
-        APICallHandler.postDelayed(runnable,10);
-    }
-
-    @Override
-    public void onDestroy(){
-        Log.d("Main Activity","Stopped API call runnable.");
-        APICallHandler.removeCallbacksAndMessages(runnable);
-        super.onDestroy();
     }
 
     private class APICallRunnable implements Runnable{

@@ -8,13 +8,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.github.mikephil.charting.data.CandleEntry;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cm.homework.cryptoapp.models.Candle;
-import cm.homework.cryptoapp.models.Coin;
 
 @Database(entities = {Candle.class}, version = 1, exportSchema = false)
 public abstract class CandleRoomDatabase extends RoomDatabase {

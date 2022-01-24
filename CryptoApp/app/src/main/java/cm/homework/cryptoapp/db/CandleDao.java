@@ -6,13 +6,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.github.mikephil.charting.data.CandleEntry;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import cm.homework.cryptoapp.models.Candle;
-import cm.homework.cryptoapp.models.Coin;
 
 @Dao
 public interface CandleDao {

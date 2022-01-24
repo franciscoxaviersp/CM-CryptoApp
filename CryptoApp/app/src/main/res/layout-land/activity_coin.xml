@@ -129,6 +129,7 @@
                         android:layout_weight="1"/>
 
                     <Button
+                        android:id="@+id/buybutton"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="20dp"
@@ -142,6 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                     <Button
+                        android:id="@+id/sellbutton"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingRight="20dp"

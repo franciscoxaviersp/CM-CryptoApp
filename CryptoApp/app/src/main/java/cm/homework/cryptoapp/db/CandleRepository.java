@@ -4,8 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.github.mikephil.charting.data.CandleEntry;
-
 import java.util.List;
 
 import cm.homework.cryptoapp.models.Candle;

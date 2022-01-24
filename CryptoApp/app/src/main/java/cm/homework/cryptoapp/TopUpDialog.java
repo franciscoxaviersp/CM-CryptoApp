@@ -2,15 +2,12 @@ package cm.homework.cryptoapp;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-
-import cm.homework.cryptoapp.R;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class TopUpDialog extends Dialog implements View.OnClickListener {

@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,9 +39,8 @@ import cm.homework.cryptoapp.R;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
+import cm.homework.cryptoapp.R;
 import cm.homework.cryptoapp.TopUpDialog;
-import cm.homework.cryptoapp.QRScanning;
-import cm.homework.cryptoapp.TransferActivity;
 
 public class wallet extends AppCompatActivity {
 
@@ -60,9 +58,7 @@ public class wallet extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_wallet);
-        getSupportActionBar().setTitle("Crypto Wallet");
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.LogoBlue)));
-         user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {

@@ -1,4 +1,4 @@
-package cm.homework.cryptoapp;
+package cm.homework.cryptoapp.viewmodels;
 
 import android.app.Application;
 
