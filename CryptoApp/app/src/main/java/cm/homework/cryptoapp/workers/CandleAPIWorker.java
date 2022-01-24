@@ -28,7 +28,6 @@ public class CandleAPIWorker extends Worker {
     public Result doWork() {
 
         CandleDao candleDao = CandleRoomDatabase.getDatabase(getApplicationContext()).candleDao();
-        candleDao.deleteAll();
 
         String period = getInputData().getString("period");
         String symbol = getInputData().getString("symbol");
@@ -64,19 +63,24 @@ public class CandleAPIWorker extends Worker {
             Log.e(TAG,"ERROR! Error updating repository/database with Binance API info");
         }
 
-        String[] items = res.substring(1,res.length()-1).replaceAll("\\[", "").split("\\]");
+        try {
+            String[] items = res.substring(1, res.length() - 1).replaceAll("\\[", "").split("\\]");
+            candleDao.deleteAll();
+            for(int i=0;i<items.length;i++ ){
+                String temp;
+                if (i!=0) temp = items[i].substring(1);
+                else temp = items[i];
+                String[] items2 = temp.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
 
-        for(int i=0;i<items.length;i++ ){
-            String temp;
-            if (i!=0) temp = items[i].substring(1);
-            else temp = items[i];
-            String[] items2 = temp.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
+                Candle c = new Candle(i,Float.parseFloat(items2[2].replaceAll("\"","")),Float.parseFloat(items2[3].replaceAll("\"","")),Float.parseFloat(items2[1].replaceAll("\"","")),Float.parseFloat(items2[4].replaceAll("\"","")));
 
-            Candle c = new Candle(i,Float.parseFloat(items2[2].replaceAll("\"","")),Float.parseFloat(items2[3].replaceAll("\"","")),Float.parseFloat(items2[1].replaceAll("\"","")),Float.parseFloat(items2[4].replaceAll("\"","")));
+                candleDao.insert(c);
+            }
 
-            candleDao.insert(c);
+            return Result.success();
+        }catch (Exception e){
+            Log.e(TAG,"Unable to retrieve candles from API.");
         }
-
-        return Result.success();
+        return Result.failure();
     }
 }

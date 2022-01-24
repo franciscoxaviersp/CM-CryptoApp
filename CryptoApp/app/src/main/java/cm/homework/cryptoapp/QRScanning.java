@@ -18,9 +18,6 @@ public class QRScanning extends AppCompatActivity implements ZXingScannerView.Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
-        getSupportActionBar().setTitle("Wallet Scanning");
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.LogoBlue)));
-
         // Programmatically initialize the scanner view
         mScannerView = new ZXingScannerView(this);
         // Set the scanner view as the content view
