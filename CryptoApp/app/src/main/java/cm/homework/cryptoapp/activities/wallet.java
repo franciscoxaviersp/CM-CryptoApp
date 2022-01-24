@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cm.homework.cryptoapp.NotificationTask;
 import cm.homework.cryptoapp.R;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -75,6 +79,7 @@ public class wallet extends AppCompatActivity {
 
             }
         });
+
         TextView name = findViewById(R.id.name);
         name.setText("Welcome, " + user.getDisplayName());
 

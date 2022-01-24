@@ -141,7 +141,6 @@ public class TransferActivity extends AppCompatActivity {
                                     db.collection("users").document(edit.getText().toString()).set(temp_currencies).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-
                                             finish();
                                         }
                                     });
