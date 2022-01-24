@@ -1,6 +1,5 @@
 package cm.homework.cryptoapp.activities;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -9,7 +8,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -49,16 +48,16 @@ import java.util.Map;
 import cm.homework.cryptoapp.BuyDialog;
 import cm.homework.cryptoapp.R;
 import cm.homework.cryptoapp.SellDialog;
-import cm.homework.cryptoapp.TopUpDialog;
-import cm.homework.cryptoapp.db.CandleDao;
-import cm.homework.cryptoapp.db.CandleRepository;
-import cm.homework.cryptoapp.db.CandleRoomDatabase;
-import cm.homework.cryptoapp.db.CoinRepository;
 import cm.homework.cryptoapp.models.Candle;
 import cm.homework.cryptoapp.models.Coin;
+import cm.homework.cryptoapp.viewmodels.CandleViewModel;
+import cm.homework.cryptoapp.viewmodels.CoinViewModel;
 import cm.homework.cryptoapp.workers.CandleAPIWorker;
 
 public class CoinActivity extends AppCompatActivity {
+
+    private CoinViewModel mCoinViewModel;
+    private CandleViewModel mCandleViewModel;
 
     private TextView askPriceView;
     private TextView priceChangeView;
@@ -134,8 +133,10 @@ public class CoinActivity extends AppCompatActivity {
         volumeView.setText(Double.toString(volume));
         volumeEurView.setText(volumeEur);
 
-        CoinRepository mRepository = new CoinRepository(getApplication());
-        mRepository.getAllCoins().observe(this, coins -> {
+        mCandleViewModel = new ViewModelProvider(this).get(CandleViewModel.class);
+        mCoinViewModel = new ViewModelProvider(this).get(CoinViewModel.class);
+
+        mCoinViewModel.getAllCoins().observe(this, coins -> {
             for(Coin c : coins){
                 if(c.getSymbol().equalsIgnoreCase(symbol)){
                     askPriceView.setText(Double.toString(c.getAskPrice())+"€");
@@ -298,11 +299,7 @@ public class CoinActivity extends AppCompatActivity {
         Legend l = candleStickChart.getLegend();
         l.setEnabled(false);
 
-        CandleRepository mRepository = new CandleRepository(getApplication());
-        CandleDao candleDao = CandleRoomDatabase.getDatabase(getApplicationContext()).candleDao();
-        candleDao.deleteAll();
-
-        mRepository.getAllCandles().observe(this, c -> {
+        mCandleViewModel.getAllCandles().observe(this, c -> {
             // Update the cached copy of the candles
             saveCandles(c);
             if (candles.size() == 100){

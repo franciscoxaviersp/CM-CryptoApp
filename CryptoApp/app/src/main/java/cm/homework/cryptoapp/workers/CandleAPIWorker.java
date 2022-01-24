@@ -27,6 +27,9 @@ public class CandleAPIWorker extends Worker {
     @Override
     public Result doWork() {
 
+        CandleDao candleDao = CandleRoomDatabase.getDatabase(getApplicationContext()).candleDao();
+        candleDao.deleteAll();
+
         String period = getInputData().getString("period");
         String symbol = getInputData().getString("symbol");
         Log.d("Candle Worker", "Retriving candles for pair: "+symbol+", period: "+period);
@@ -63,8 +66,6 @@ public class CandleAPIWorker extends Worker {
 
         String[] items = res.substring(1,res.length()-1).replaceAll("\\[", "").split("\\]");
 
-
-        CandleDao candleDao = CandleRoomDatabase.getDatabase(getApplicationContext()).candleDao();
         for(int i=0;i<items.length;i++ ){
             String temp;
             if (i!=0) temp = items[i].substring(1);
