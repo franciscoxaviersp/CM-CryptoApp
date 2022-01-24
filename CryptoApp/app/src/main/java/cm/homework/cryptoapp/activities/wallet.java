@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +50,7 @@ public class wallet extends AppCompatActivity {
     FirebaseUser user;
     FirebaseFirestore db;
     Spinner spinner;
+    String token;
 
     @Override
     protected void onStart() {
@@ -56,7 +59,22 @@ public class wallet extends AppCompatActivity {
         getSupportActionBar().setTitle("Crypto Wallet");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.LogoBlue)));
          user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("token", "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
 
+                // Get new FCM registration token
+                token = task.getResult();
+
+                // Log and toast
+                Log.d("token", token);
+
+            }
+        });
         TextView name = findViewById(R.id.name);
         name.setText("Welcome, " + user.getDisplayName());
 
@@ -133,6 +151,7 @@ public class wallet extends AppCompatActivity {
                 }else{
                     currencies = new HashMap<String, Object>();
                     currencies.put("EUR", 0);
+                    currencies.put("token", token);
                     db.collection("users").document(user.getUid()).set(currencies);
                     adapter.add("EUR");
                     adapter.notifyDataSetChanged();

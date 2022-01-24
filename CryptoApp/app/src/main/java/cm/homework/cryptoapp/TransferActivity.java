@@ -25,7 +25,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +45,7 @@ public class TransferActivity extends AppCompatActivity {
     FirebaseFirestore db;
     public Map<String, Object> currencies;
     ArrayAdapter<String> adapter;
+    FirebaseMessaging inst;
 
 
     @Override
@@ -54,6 +62,8 @@ public class TransferActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
+
         ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -122,6 +132,7 @@ public class TransferActivity extends AppCompatActivity {
                                     db.collection("users").document(edit.getText().toString()).set(temp_currencies).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+
                                             finish();
                                         }
                                     });
@@ -130,6 +141,7 @@ public class TransferActivity extends AppCompatActivity {
                                     db.collection("users").document(edit.getText().toString()).set(temp_currencies).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+
                                             finish();
                                         }
                                     });
