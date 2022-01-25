@@ -14,7 +14,9 @@
         android:layout_marginBottom="176dp"
         android:text="Wallet"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toEndOf="@+id/button2" />
 
     <Button
         android:id="@+id/button2"

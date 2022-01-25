@@ -152,7 +152,6 @@ public class wallet extends AppCompatActivity {
                 }else{
                     currencies = new HashMap<String, Object>();
                     currencies.put("EUR", 0);
-                    currencies.put("token", token);
                     db.collection("users").document(user.getUid()).set(currencies);
                     adapter.add("EUR");
                     adapter.notifyDataSetChanged();
