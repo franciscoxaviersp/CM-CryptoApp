@@ -49,8 +49,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
 
     //work manager
-    implementation "androidx.work:work-runtime:2.3.1"
-
+    implementation 'androidx.work:work-runtime:2.7.0-alpha05'
     //candle chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
