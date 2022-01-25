@@ -1,5 +1,6 @@
 package cm.homework.cryptoapp.activities;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -179,12 +180,18 @@ public class CoinActivity extends AppCompatActivity {
                         BuyDialog bd = new BuyDialog(CoinActivity.this, askPrice, symbol);
                         bd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         bd.show();
-                        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        bd.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                currencies = task.getResult().getData();
+                            public void onDismiss(DialogInterface dialog) {
+                                db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        currencies = task.getResult().getData();
+                                    }
+                                });
                             }
                         });
+
                     }else{
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "You need to have EUR to buy coins",
@@ -209,12 +216,18 @@ public class CoinActivity extends AppCompatActivity {
                         SellDialog sd = new SellDialog(CoinActivity.this, askPrice, symbol);
                         sd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         sd.show();
-                        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        sd.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                currencies = task.getResult().getData();
+                            public void onDismiss(DialogInterface dialog) {
+                                db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        currencies = task.getResult().getData();
+                                    }
+                                });
                             }
                         });
+
                     }else{
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "You need to have " + symbol.substring(0, symbol.length()-3) + " to sell",
